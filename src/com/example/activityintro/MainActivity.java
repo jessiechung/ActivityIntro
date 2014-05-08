@@ -1,8 +1,12 @@
 package com.example.activityintro;
 
+import com.example.activityintro.fragment.MyFragment1;
+import com.example.activityintro.fragment.PlaceholderFragment;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,23 +54,6 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
 	
 	public void goToActivity(View view) {
 		Intent intent = new Intent();
@@ -113,6 +100,21 @@ public class MainActivity extends ActionBarActivity {
 			Toast.makeText(this, "Activity3 back", Toast.LENGTH_SHORT).show();
 			break;
 		}
+	}
+	
+	public void replaceFragment(View view) {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		
+		switch (view.getId()) {
+		case R.id.PlaceholderFragmentBtn:
+			transaction.replace(R.id.container, new MyFragment1());
+			break;
+		case R.id.Fragment1Btn:
+			transaction.replace(R.id.container, new PlaceholderFragment());
+			break;
+		}
+		
+		transaction.commit();
 	}
 
 }
