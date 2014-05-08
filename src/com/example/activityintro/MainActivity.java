@@ -3,15 +3,22 @@ package com.example.activityintro;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
+
+	private static final int REQUEST_CODE_ACT1 = 1;
+	private static final int REQUEST_CODE_ACT2 = 2;
+	private static final int REQUEST_CODE_ACT3 = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,53 @@ public class MainActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_main, container,
 					false);
 			return rootView;
+		}
+	}
+	
+	public void goToActivity(View view) {
+		Intent intent = new Intent();
+		
+		switch (view.getId()) {
+		case R.id.button1:
+			intent.setClass(this, Activity1.class);
+			intent.putExtra("message", "hi act1");
+			startActivityForResult(intent, REQUEST_CODE_ACT1);
+			break;
+			
+		case R.id.button2:
+			intent.setClass(this, Activity2.class);
+			intent.putExtra("message", "hi act2");
+			startActivityForResult(intent, REQUEST_CODE_ACT2);
+			break;
+			
+		case R.id.button3:
+			intent.setClass(this, Activity3.class);
+			intent.putExtra("message", "hi act3");
+			startActivityForResult(intent, REQUEST_CODE_ACT3);
+			break;
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, intent);
+		Log.d("debug", "requestCode=" + requestCode + ", resultCode=" + resultCode);
+		if (intent != null) 
+			Log.d("debug", "intent (who) = " + intent.getStringExtra("who"));
+		
+		switch (requestCode) {
+		case REQUEST_CODE_ACT1:
+			Toast.makeText(this, "Activity1 back", Toast.LENGTH_SHORT).show();
+			break;
+			
+		case REQUEST_CODE_ACT2:
+			Toast.makeText(this, "Activity2 back", Toast.LENGTH_SHORT).show();
+			break;
+			
+		case REQUEST_CODE_ACT3:
+			Toast.makeText(this, "Activity3 back", Toast.LENGTH_SHORT).show();
+			break;
 		}
 	}
 
